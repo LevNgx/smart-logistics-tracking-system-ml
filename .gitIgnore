@@ -1,0 +1,24 @@
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore model files
+ml/models/*.h5
+ml/models/*.pkl
+ml/*.pkl
+models/*.json
+
+# Ignore large datasets
+ml/data/*.csv
+data/*.xlsx
+data/*.parquet
+
+# Ignore Jupyter auto-save files
+.ipynb_checkpoints/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+.vscode
