@@ -1,6 +1,7 @@
 # Ignore virtual environments
 venv/
 .venv/
+.DS_Store
 
 # Ignore model files
 ml/models/*.h5

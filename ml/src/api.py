@@ -1,32 +1,21 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import numpy as np
-import tensorflow as tf
-import joblib
+from typing import List
+from predict import predict_delay
 
-# Load model and scaler
-model = tf.keras.models.load_model("../models/shipment_delay_model.h5")
-scaler = joblib.load("../models/scaler.pkl")
-
-# Initialize API
 app = FastAPI()
 
-# Define Input Data Model
-class ShipmentData(BaseModel):
-    distance_km: float
-    traffic_level: int
-    weather_conditions: int
+class ShipmentInput(BaseModel):
+    shipments: List[List[float]]
 
 @app.post("/predict")
-def predict_shipment_delay(data: ShipmentData):
-    """
-    Predict if a shipment will be delayed.
-    """
-    input_data = np.array([[data.distance_km, data.traffic_level, data.weather_conditions, 0]])
-    input_data = scaler.transform(input_data)
-    input_data = np.reshape(input_data, (1, 10, input_data.shape[1]))
+def predict(input_data: ShipmentInput):
+    if not input_data.shipments:
+        return {"error": "No input provided"}
+    
+    prediction = predict_delay(input_data.shipments)
+    return prediction
 
-    prediction = model.predict(input_data)
-    return {"delay_prediction": int(prediction[0] > 0.5)}
-
-# Run with: uvicorn src.api:app --reload
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
