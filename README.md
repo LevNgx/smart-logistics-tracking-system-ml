@@ -22,3 +22,27 @@ The Smart Logistics & Delivery Tracking System is a full-stack application that 
 6. Docker & Kubernetes	Containerization & Orchestration
 7. Jenkins	CI/CD Automation
 8. GitHub	Version Control
+
+
+
+This project predicts **shipment delays** using a **hybrid machine learning model** with:
+- ✅ **XGBoost** (structured tabular data)
+- ✅ **LSTM Neural Networks** (time-series learning)
+- ✅ **TensorBoard** for real-time training visualization
+
+📌 Running XGBoost on Different Systems
+XGBoost requires OpenMP for optimized parallel processing.
+Depending on your operating system, you may need extra steps to install OpenMP.
+✅ MacOS (Apple Silicon & Intel)
+Run the following command:
+brew install libomp
+
+📌 If XGBoost still fails with an OpenMP error, try setting the environment variable manually:
+export PATH="/opt/homebrew/opt/libomp/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/libomp/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
+
+📌 Then, reinstall XGBoost:
+pip uninstall xgboost -y
+pip install xgboost
+
